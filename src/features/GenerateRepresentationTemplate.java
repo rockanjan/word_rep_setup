@@ -5,17 +5,17 @@ import java.io.PrintWriter;
 
 public class GenerateRepresentationTemplate {
 	/*
-	word
-	smoothedWord
-	allcapSmoothedWord
-	isInitCap
-	isAllCap
-	prefix3
-	prefix4
-	suffix1
-	suffix2
-	suffix3
-	suffix4
+	0 word
+	1 smoothedWord
+	2 allcapSmoothedWord
+	3 isInitCap
+	4 isAllCap
+	5 prefix3
+	6 prefix4
+	7 suffix1
+	8 suffix2
+	9 suffix3
+	10 suffix4
 	for(String rep : representation) {
 		sb.append(rep);
 	}
@@ -23,7 +23,7 @@ public class GenerateRepresentationTemplate {
 	*/
 	
 	public static void main(String[] args) throws FileNotFoundException {
-		int REP_LENGTH = 4;
+		int REP_LENGTH = 4; // 0 means baseline
 		String templateFile = "/home/anjan/work/ner/train_test_dev/withoutchunk/features/representation.template";
 		StringBuffer content = new StringBuffer();
 		int featureIndex = 0;
