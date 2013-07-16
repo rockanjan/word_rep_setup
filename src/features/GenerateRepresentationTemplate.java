@@ -23,7 +23,7 @@ public class GenerateRepresentationTemplate {
 	*/
 	
 	public static void main(String[] args) throws FileNotFoundException {
-		int REP_LENGTH = 4; // 0 means baseline
+		int REP_LENGTH = 1; // 0 means baseline
 		String templateFile = "/home/anjan/work/ner/train_test_dev/withoutchunk/features/representation.template";
 		StringBuffer content = new StringBuffer();
 		int featureIndex = 0;
@@ -31,42 +31,39 @@ public class GenerateRepresentationTemplate {
 		for(int i=-2; i<=2; i++) {
 			content.append(String.format("U%d:%%x[%d,2]\n", featureIndex, i));
 			featureIndex++;
-		}for(int i=-2; i<=2; i++) {
-			content.append(String.format("U%d:%%x[%d,1]\n", featureIndex, i));
-			featureIndex++;
-		}
-		
+		}		
 		//B: token themselves in window of +- 2
 		//use smoothed token
 		for(int i=-2; i<=2; i++) {
 			content.append(String.format("U%d:%%x[%d,1]\n", featureIndex, i));
 			featureIndex++;
-		}
-		
+		}		
 		//bigrams
 		for(int i=-1; i<=0; i++) {
 			content.append(String.format("U%d:%%x[%d,1]/%%x[%d,1]\n", featureIndex, i, i+1));
 			featureIndex++;
-		}
-		
+		}		
 		//D: initial capitalization of tokens in a window of +- 2
 		for(int i=-2; i<=2; i++) {
 			content.append(String.format("U%d:%%x[%d,3]\n", featureIndex, i));
 			featureIndex++;
-		}
-		
+		}		
 		//E: more elaborate word type info
 		//all caps
-		//TODO: might have to add more features
-		content.append(String.format("U%d:%%x[0,%d]\n", featureIndex, 4));
-		featureIndex++;
-		
-		//F: token prefix and suffix
-		for(int i=5; i<11; i++) {
-			content.append(String.format("U%d:%%x[0,%d]\n", featureIndex, i));
+		for(int i=-1; i<=1; i++) {
+			content.append(String.format("U%d:%%x[%d,4]\n", featureIndex, i));
 			featureIndex++;
 		}
 		
+		//F: token prefix and suffix
+		for(int j=5; j<11; j++) {
+			for(int i=-1; i<=1; i++) {
+				content.append(String.format("U%d:%%x[%d,%d]\n", featureIndex, i, j));
+				featureIndex++;
+			}
+		}		
+		
+		/*** representation features starts ***/
 		//Add representations
 		for(int d=0; d<REP_LENGTH; d++) { //rep dimension
 			for(int i=-2; i<=2; i++) {
@@ -74,15 +71,19 @@ public class GenerateRepresentationTemplate {
 				featureIndex++;
 			}
 		}
+		/*** representaiton features complete***/
 		
-		//C: previous tag and current token
-		// modify to current tag and token, which is already included
+		
+		//C: previous two tags and current token combined with previous tag
+				int bigramFeatureIndex = 0;
+				content.append(String.format("B%d:%%x[0,1]\n", bigramFeatureIndex));
+				bigramFeatureIndex++;
+				
 		//bigram
-		content.append("B\n");
+		content.append(String.format("B%d\n", bigramFeatureIndex));
 		System.out.println(content.toString());
 		PrintWriter pw = new PrintWriter(templateFile);
 		pw.println(content.toString());
 		pw.close();
-		
 	}
 }
