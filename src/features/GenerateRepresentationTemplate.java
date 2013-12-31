@@ -71,13 +71,39 @@ public class GenerateRepresentationTemplate {
 				featureIndex++;
 			}
 		}
+		/*
+		//my : combined with current word
+		for(int d=0; d<REP_LENGTH; d++) { //rep dimension
+			for(int i=-1; i<=1; i++) {
+				content.append(String.format("U%d:%%x[%d,%d]/%%x[%d,%d]\n", featureIndex, i, (11+d), 0, 1));
+				featureIndex++;
+			}
+		}
+		//bigram of representation
+		for(int d=0; d<REP_LENGTH; d++) { //rep dimension
+			for(int i=-1; i<=0; i++) {
+				content.append(String.format("U%d:%%x[%d,%d]/%%x[%d,%d]\n", featureIndex, i, (11+d), i+1, (11+d)));
+				featureIndex++;
+			}
+		}
+		*/
+		
+		int bigramFeatureIndex = 0;
+		/*
+		//bigram of representation with bigram of tags
+		for(int d=0; d<REP_LENGTH; d++) { //rep dimension
+			for(int i=-1; i<=0; i++) {
+				content.append(String.format("B%d:%%x[%d,%d]/%%x[%d,%d]\n", bigramFeatureIndex, i, (11+d), i+1, (11+d)));
+				bigramFeatureIndex++;
+			}
+		}
+		*/
 		/*** representaiton features complete***/
 		
-		
 		//C: previous two tags and current token combined with previous tag
-				int bigramFeatureIndex = 0;
-				content.append(String.format("B%d:%%x[0,1]\n", bigramFeatureIndex));
-				bigramFeatureIndex++;
+		
+		content.append(String.format("B%d:%%x[0,1]\n", bigramFeatureIndex));
+		bigramFeatureIndex++;
 				
 		//bigram
 		content.append(String.format("B%d\n", bigramFeatureIndex));
