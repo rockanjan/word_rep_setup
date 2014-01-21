@@ -1,10 +1,11 @@
-package representation;
+package features.ner;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import representation.BrownClusterRepresentation;
 import data.DataRowBrownCluster;
 
 public class GenerateFeaturesUsingBrownRepresentation {
@@ -25,7 +26,7 @@ public class GenerateFeaturesUsingBrownRepresentation {
 				line = line.trim();
 				if(! line.isEmpty() ) {
 					DataRowBrownCluster dr = new DataRowBrownCluster(line);
-					outTrain.println(dr.getRowWithFeature());
+					outTrain.println(dr.getRowWithFeatureForChunking());
 				} else {
 					outTrain.println();
 				}

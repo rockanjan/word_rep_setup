@@ -2,10 +2,12 @@ package data;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 /*
  * stores each row data of a sentence
  */
+
+//NER does not include pos as features
+//Chunking does
 public class DataRow {
 	private String word;
 	private String pos;
@@ -34,7 +36,7 @@ public class DataRow {
 	}
 	
 	
-	public String getRowWithFeature() {
+	public String getRowWithFeatureForNer() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(word); //word as it is
 		sb.append(" ");
@@ -59,6 +61,24 @@ public class DataRow {
 			sb.append(" ");
 		}
 		
+		for(String rep : representation) {
+			sb.append(rep);
+			sb.append(" ");
+		}
+		
+		sb.append(label);
+		return sb.toString();
+	}
+	
+	public String getRowWithFeatureForChunking() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(word); //word as it is
+		sb.append(" ");
+		String smoothedWord = TokenProcessor.getSmoothedWord(word);
+		sb.append(smoothedWord.toLowerCase());
+		sb.append(" ");
+		sb.append(pos);
+		sb.append(" ");
 		for(String rep : representation) {
 			sb.append(rep);
 			sb.append(" ");

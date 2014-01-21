@@ -1,4 +1,4 @@
-package features;
+package features.ner;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

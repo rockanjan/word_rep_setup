@@ -1,4 +1,4 @@
-package features;
+package features.ner;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -23,7 +23,7 @@ public class GenerateRepresentationTemplate {
 	*/
 	
 	public static void main(String[] args) throws FileNotFoundException {
-		int REP_LENGTH = 1; // 0 means baseline
+		int REP_LENGTH = 24; // 0 means baseline
 		String templateFile = "/home/anjan/work/ner/train_test_dev/withoutchunk/features/representation.template";
 		StringBuffer content = new StringBuffer();
 		int featureIndex = 0;

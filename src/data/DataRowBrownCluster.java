@@ -2,7 +2,6 @@ package data;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import representation.BrownClusterRepresentation;
 /*
@@ -35,7 +34,7 @@ public class DataRowBrownCluster {
 	}
 	
 	
-	public String getRowWithFeature() {
+	public String getRowWithFeatureForNer() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(word); //word as it is
 		sb.append(" ");
@@ -68,6 +67,26 @@ public class DataRowBrownCluster {
 		sb.append(label);
 		return sb.toString();
 	}
+	
+	public String getRowWithFeatureForChunking() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(word); //word as it is
+		sb.append(" ");
+		String smoothedWord = TokenProcessor.getSmoothedWord(word);
+		sb.append(smoothedWord.toLowerCase());
+		sb.append(" ");
+		sb.append(pos);
+		sb.append(" ");
+		for(String rep : representation) {
+			sb.append(rep);
+			sb.append(" ");
+		}
+		
+		sb.append(label);
+		return sb.toString();
+	}
+	
+	
 	
 	public String isInitialCap() {
 		if(TokenProcessor.isInitialCap(word)) {
