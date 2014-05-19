@@ -26,7 +26,9 @@ public class GenerateFeaturesForNer {
 				line = line.trim();
 				if (!line.isEmpty()) {
 					DataRow dr = new DataRow(line);
-					outTrain.println(dr.getRowWithFeatureForNer());
+					outTrain.println(dr.getRowWithFeatureForNer("%.2f"));
+				} else {
+					outTrain.println();
 				}
 			}
 			br.close();

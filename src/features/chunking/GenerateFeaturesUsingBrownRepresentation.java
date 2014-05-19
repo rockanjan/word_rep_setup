@@ -9,11 +9,12 @@ import representation.BrownClusterRepresentation;
 import data.DataRowBrownCluster;
 
 public class GenerateFeaturesUsingBrownRepresentation {
-	static String filename = "brown-rcv1.clean.tokenized-CoNLL03.txt-c1000-freq1.txt";
+	//static String filename = "brown-rcv1.clean.tokenized-CoNLL03.txt-c1000-freq1.txt";
+	static String filename = "/home/anjan/src/brown-cluster/rcv1.txt.SPL-c1000-p1.out/paths";
 	public static void main(String[] args) throws IOException {
 		BrownClusterRepresentation.createBrownClusterMap(filename);
-		String root = "/home/anjan/work/ner/train_test_dev/withoutchunk/";
-		String[] files = {"train_rep.txt", "testa_rep.txt", "testb_rep.txt", "muc7_rep.txt"};
+		String root = "/home/anjan/work/chunk/";
+		String[] files = {"train.rep.txt", "test.rep.txt"};
 		
 		for(String file : files) {
 			String absolutePathFile = root + file;
@@ -26,7 +27,7 @@ public class GenerateFeaturesUsingBrownRepresentation {
 				line = line.trim();
 				if(! line.isEmpty() ) {
 					DataRowBrownCluster dr = new DataRowBrownCluster(line);
-					outTrain.println(dr.getRowWithFeatureForNer());
+					outTrain.println(dr.getRowWithFeatureForChunking());
 				} else {
 					outTrain.println();
 				}

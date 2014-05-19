@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TokenProcessor {
+	public static String NUM = "*num*";
 	public static String getSmoothedWord(String queryWord) {
 		//String word = queryWord.toLowerCase();
 		String word = queryWord;
@@ -31,13 +32,13 @@ public class TokenProcessor {
 		if(m0.matches()) {
 			word = "_" + word.replaceAll("[0-9]", "D") + "_";
 		} else if(m4.matches()) { 
-			word = "_" + word.replaceAll("[0-9]+", "_NUM_"); //fractions
+			word = "_" + word.replaceAll("[0-9]+", NUM); //fractions
 		} else if(m5.matches()) {
 			word = "_" + word.replaceAll("[0-9]", "D") + "_"; //time and ratio
 		} else if(m6.matches() || m7.matches()) {
 			word = "_" + word.replaceAll("[0-9]", "D") + "_";
 		} else if(m1.matches() || m2.matches() || m3.matches()) {
-			word = "_NUM_";
+			word = NUM;
 		}
 		
 		word = word.replaceAll("" +
@@ -48,7 +49,7 @@ public class TokenProcessor {
 				"(^-{0,1}[0-9]{1,3}[,[0-9]{3}]*\\.*[0-9]*)|" +
 				"(^-{0,1}[0-9]*\\.*[0-9]+)|" +
 				"(^-{0,1}[0-9]+\\.*[0-9]*)+"
-				, "_NUM_"); //for something like 10-years-old, 2-for-3 etc
+				, NUM); //for something like 10-years-old, 2-for-3 etc
 		
 		return word;
 	}

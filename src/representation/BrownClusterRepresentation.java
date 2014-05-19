@@ -27,6 +27,7 @@ public class BrownClusterRepresentation {
 			if (!line.isEmpty()) {
 				String splitted[] = line.split("(\\s+)|(\\t+)");
 				if (splitted.length < 2) {
+					br.close();
 					throw new RuntimeException(
 							"Error reading brown cluster representation on line : "
 									+ line);
@@ -37,6 +38,7 @@ public class BrownClusterRepresentation {
 				brownClusterWordToRepresentationSmoothed.put(TokenProcessor.getSmoothedWord(word), rep);
 			}
 		}
+		br.close();
 	}
 	
 	/*
@@ -46,7 +48,6 @@ public class BrownClusterRepresentation {
 	 */
 	public static String getRepresentation(String word) {
 		String defaultRep = "-1";
-		String defaultNum = "-2"; //for numbers _NUM_
 		if(brownClusterWordToRepresentation == null) {
 			throw new RuntimeException("representation map not initialized");
 		}
@@ -58,8 +59,13 @@ public class BrownClusterRepresentation {
 			word = TokenProcessor.getSmoothedWord(word);
 			if(brownClusterWordToRepresentationSmoothed.containsKey(word)) {
 				rep = brownClusterWordToRepresentationSmoothed.get(word);
-			} else if(word.equalsIgnoreCase("_NUM_") ) {//after smoothing
-				rep = defaultNum;
+			} else {
+				//try lowercase
+				word = word.toLowerCase();
+				word = TokenProcessor.getSmoothedWord(word);
+				if(brownClusterWordToRepresentationSmoothed.containsKey(word)) {
+					rep = brownClusterWordToRepresentationSmoothed.get(word);
+				}
 			}
 		}
 		return rep;

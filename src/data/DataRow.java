@@ -36,7 +36,7 @@ public class DataRow {
 	}
 	
 	
-	public String getRowWithFeatureForNer() {
+	public String getRowWithFeatureForNer(String format) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(word); //word as it is
 		sb.append(" ");
@@ -62,6 +62,16 @@ public class DataRow {
 		}
 		
 		for(String rep : representation) {
+			Double repFloat = null;
+			try{
+				repFloat = Double.parseDouble(rep);
+			} catch(NumberFormatException nfe) {
+				nfe.printStackTrace();
+				System.exit(-1);
+			}
+			if(repFloat != null) {
+				rep = String.format(format, repFloat);
+			}
 			sb.append(rep);
 			sb.append(" ");
 		}
@@ -70,7 +80,7 @@ public class DataRow {
 		return sb.toString();
 	}
 	
-	public String getRowWithFeatureForChunking() {
+	public String getRowWithFeatureForChunking(String format) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(word); //word as it is
 		sb.append(" ");
@@ -80,6 +90,16 @@ public class DataRow {
 		sb.append(pos);
 		sb.append(" ");
 		for(String rep : representation) {
+			Double repFloat = null;
+			try{
+				repFloat = Double.parseDouble(rep);
+			} catch(NumberFormatException nfe) {
+				nfe.printStackTrace();
+				System.exit(-1);
+			}
+			if(repFloat != null) {
+				rep = String.format(format, repFloat);
+			}
 			sb.append(rep);
 			sb.append(" ");
 		}

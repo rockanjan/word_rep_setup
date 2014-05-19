@@ -10,7 +10,7 @@ import data.DataRow;
 public class GenerateFeaturesForChunking {
 	public static void main(String[] args) throws IOException {
 		String root = "/home/anjan/work/chunk/";
-		String[] files = {"train.txt", "test.txt"};
+		String[] files = {"train.rep.txt", "test.rep.txt"};
 		
 		for(String file : files) {
 			String absolutePathFile = root + file;
@@ -23,7 +23,7 @@ public class GenerateFeaturesForChunking {
 				line = line.trim();
 				if(! line.isEmpty() ) {
 					DataRow dr = new DataRow(line);
-					outTrain.println(dr.getRowWithFeatureForChunking());
+					outTrain.println(dr.getRowWithFeatureForChunking("%.2f"));
 				} else {
 					outTrain.println();
 				}

@@ -58,12 +58,23 @@ public class DataRowBrownCluster {
 			sb.append(suffix);
 			sb.append(" ");
 		}
-		
+		//try prefixes of length 4,6,10 and 20 if applicable
+		int[] prefixLengths = {4, 6, 10, 20};
+		String[] brownPrefixes = new String[prefixLengths.length];
+		for(int i=0; i<brownPrefixes.length; i++) {
+			brownPrefixes[i] = "_NA_";
+		}
 		for(String rep : representation) {
+			for(int i=0; i<prefixLengths.length; i++) {
+				if (rep.length() >= prefixLengths[i]) {
+					brownPrefixes[i] = rep.substring(0, prefixLengths[i]);
+				}
+				sb.append(brownPrefixes[i] + " ");
+			}
+			//whole path
 			sb.append(rep);
 			sb.append(" ");
 		}
-		
 		sb.append(label);
 		return sb.toString();
 	}
@@ -77,11 +88,23 @@ public class DataRowBrownCluster {
 		sb.append(" ");
 		sb.append(pos);
 		sb.append(" ");
+		//try prefixes of length 4,6,10 and 20 if applicable
+		int[] prefixLengths = {4, 6, 10, 20};
+		String[] brownPrefixes = new String[prefixLengths.length];
+		for(int i=0; i<brownPrefixes.length; i++) {
+			brownPrefixes[i] = "_NA_";
+		}
 		for(String rep : representation) {
+			for(int i=0; i<prefixLengths.length; i++) {
+				if (rep.length() >= prefixLengths[i]) {
+					brownPrefixes[i] = rep.substring(0, prefixLengths[i]);
+				}
+				sb.append(brownPrefixes[i] + " ");
+			}
+			//whole path
 			sb.append(rep);
 			sb.append(" ");
-		}
-		
+		}		
 		sb.append(label);
 		return sb.toString();
 	}
